@@ -5,6 +5,7 @@ use std::io;
 use std::io::prelude::*;
 use std::fs::File;
 use std::path::Path;
+use std::process::Command;
 use rand::Rng;
 
 
@@ -53,6 +54,14 @@ fn main() {
         },
         Ok(_) => println!("Successfully wrote to {}", display), 
     }
-    
+   
+    Command::new("gpg").arg("-c").arg("password.txt")
+            .output().expect("failed to execute process");
+
+    println!("Password has been encrypted. Now deleting the unencrypted file");
+
+    Command::new("rm").arg("password.txt")
+            .output().expect("failed to execute process");
+
     println!("It is recommended that you rename the file to identify what the password is for");
 }
