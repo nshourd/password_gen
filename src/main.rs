@@ -10,7 +10,13 @@ use rand::Rng;
 
 
 fn main() {
+    let mut name = String::new(); 
     let mut length = String::new();    
+    
+    println!("What are you using this password for?");
+
+    io::stdin().read_line(&mut name)
+        .expect("failed to read line");
     
     println!("How long do you want your password to be?");
     
@@ -34,8 +40,10 @@ fn main() {
         //adds the character at the index position to password string
         password.push_str(&possible_chars[index..index + 1]);
     }
+   
+    name.push_str(".txt");
     
-    let path = Path::new("password.txt");
+    let path = Path::new(&name);
     let display = path.display();
 
     //Open a file in write-only mode, returns 'io::Result<File>'
@@ -55,12 +63,12 @@ fn main() {
         Ok(_) => println!("Successfully wrote to {}", display), 
     }
    
-    Command::new("gpg").arg("-c").arg("password.txt")
+    Command::new("gpg").arg("-c").arg(&name)
             .output().expect("failed to execute process");
 
     println!("Password has been encrypted. Now deleting the unencrypted file");
 
-    Command::new("rm").arg("password.txt")
+    Command::new("rm").arg(&name)
             .output().expect("failed to execute process");
 
     println!("It is recommended that you rename the file to identify what the password is for");
