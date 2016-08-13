@@ -1,4 +1,4 @@
 # password_gen
 
 This is a simple application that will randomly generate a password of a user  
-given length and write it to a text file and then enrypts the file using gpg. 
+given length and write it to a text file and then encrypts the file using gpg.
